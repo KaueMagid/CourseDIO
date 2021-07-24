@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Course.api.Models.Users
+using Course.api.Models.Users;
 
 namespace Course.api.Controllers
 {

@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Course.api.Models;
+using Course.api.Filters;
 using Course.api.Models.Users;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -19,17 +21,20 @@ namespace Course.api.Controllers
         /// <param name="loginViewModelInput"></param>
         /// <returns>Retorna o status OK, dados do usuario e o token em caso de sucesso</returns>
         [SwaggerResponse(statusCode: 200,description:"Sucess", Type =typeof(LoginViewModelInput))]
-        [SwaggerResponse(statusCode: 400, description: "Campos Obrigatórios", Type = typeof(LoginViewModelInput))]
-        [SwaggerResponse(statusCode: 500, description: "Error", Type = typeof(LoginViewModelInput))]
+        [SwaggerResponse(statusCode: 400, description: "Required fields", Type = typeof(ValidateFieldsViewModelOutput))]
+        [SwaggerResponse(statusCode: 500, description: "Error", Type = typeof(GenericErrorViewModel))]
         [HttpPost]
         [Route("login")]
+        [CustomModelStateValidation]
         public IActionResult Login(LoginViewModelInput loginViewModelInput)
         {
+            
             return Ok(loginViewModelInput);
         }
 
         [HttpPost]
         [Route("register")]
+        [CustomModelStateValidation]
         public IActionResult Register(RegisterViewModelInput registerViewModelInput)
         {
             return Created("", registerViewModelInput);

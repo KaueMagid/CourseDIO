@@ -4,6 +4,13 @@
         <name>Course.api</name>
     </assembly>
     <members>
+        <member name="M:Course.api.Controllers.UsersController.Login(Course.api.Models.Users.LoginViewModelInput)">
+            <summary>
+            Esse serviço permite autenticar um usuário cadastrado e ativo.
+            </summary>
+            <param name="loginViewModelInput"></param>
+            <returns>Retorna o status OK, dados do usuario e o token em caso de sucesso</returns>
+        </member>
         <member name="T:Course.api.Properties.Resources">
             <summary>
               Uma classe de recurso de tipo de alta segurança, para pesquisar cadeias de caracteres localizadas etc.

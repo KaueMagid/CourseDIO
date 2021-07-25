@@ -4,14 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Course.api.Models;
 using Course.api.Filters;
 using Course.api.Models.Users;
+using Course.api.Infraestruture.Data;
+
 using Swashbuckle.AspNetCore.Annotations;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.EntityFrameworkCore;
+
+using Course.api.Business.Entities;
 
 namespace Course.api.Controllers
 {
@@ -70,6 +76,28 @@ namespace Course.api.Controllers
         [CustomModelStateValidation]
         public IActionResult Register(RegisterViewModelInput registerViewModelInput)
         {
+            var optionsBuilder = new DbContextOptionsBuilder<CourseDbContext>();
+            optionsBuilder.UseSqlServer("Server=localhost;Database=CUORSE;user=Kaue;password=KaueMagid");
+            
+            CourseDbContext context = new CourseDbContext(optionsBuilder.Options);
+
+            //var pendingMigrations = context.Database.GetPendingMigrations();
+
+            //if (pendingMigrations.Count()>0)
+            //{
+            //    context.Database.Migrate();
+            //}
+
+            var user = new User()
+            {
+                Email = registerViewModelInput.Email,
+                Login = registerViewModelInput.Login,
+                Password = registerViewModelInput.Password
+            };
+            context.Users.Add(user);
+
+            context.SaveChanges();
+
             return Created("", registerViewModelInput);
         }
     }
